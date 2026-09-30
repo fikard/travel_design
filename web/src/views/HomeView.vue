@@ -1,4 +1,16 @@
 <template>
-  <div class="placeholder">地图总览页（待开发）</div>
+  <div>
+    <h2>全国特色旅游概览</h2>
+    <ChinaMap :data="provinces" @navigate="go" />
+  </div>
 </template>
-<style scoped>.placeholder{ color:#999; text-align:center; padding:80px 0; }</style>
+<script setup>
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import ChinaMap from '../components/ChinaMap.vue';
+import { getProvinces } from '../api';
+const provinces = ref([]);
+const router = useRouter();
+onMounted(async ()=> provinces.value = await getProvinces());
+function go(code){ if(code) router.push('/province/'+code); }
+</script>
