@@ -18,6 +18,7 @@
       </el-col>
     </el-row>
     <div class="body"><h3>攻略介绍</h3><p>{{ place.body }}</p></div>
+    <ReviewSection :place="place" @changed="reload" />
   </div>
 </template>
 <script setup>
@@ -25,8 +26,10 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { getPlace } from '../api';
 import ScoreRadar from '../components/ScoreRadar.vue';
+import ReviewSection from '../components/ReviewSection.vue';
 const route = useRoute(); const place = ref(null);
-onMounted(async ()=> place.value = await getPlace(route.params.id));
+async function reload(){ place.value = await getPlace(route.params.id); }
+onMounted(reload);
 </script>
 <style scoped>
 .score{ color:#f57c00; font-size:16px; margin:12px 0; }
