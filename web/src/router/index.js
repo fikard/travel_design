@@ -7,5 +7,6 @@ const routes = [
   { path: '/topics', component: () => import('../views/TopicsView.vue') },
   { path: '/topic/:id', component: () => import('../views/TopicDetailView.vue') },
   { path: '/search', component: () => import('../views/SearchView.vue') },
+  { path: '/my-reviews', component: () => import('../views/MyReviewsView.vue') },
 ];
 export default createRouter({ history: createWebHistory(), routes });

@@ -3,7 +3,8 @@
     <header class="topbar">
       <router-link to="/" class="logo">游迹地图</router-link>
       <nav><router-link to="/">地图总览</router-link>
-        <router-link to="/topics">专题榜</router-link></nav>
+        <router-link to="/topics">专题榜</router-link>
+        <router-link to="/my-reviews">我的评价</router-link></nav>
       <el-input v-model="q" placeholder="搜索景点/美食/项目" clearable
         style="width:220px" @keyup.enter="doSearch" @clear="doSearch" />
     </header>
