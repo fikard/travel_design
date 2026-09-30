@@ -1,5 +1,7 @@
 import axios from 'axios';
+import { getVisitorId } from '../utils/visitor';
 const http = axios.create({ baseURL: import.meta.env.VITE_API_BASE || '/api' });
+http.interceptors.request.use(cfg => { cfg.headers['X-Visitor-Id'] = getVisitorId(); return cfg; });
 export const getProvinces = () => http.get('/provinces').then(r=>r.data);
 export const getProvince = (code) => http.get('/provinces/'+code).then(r=>r.data);
 export const getCity = (code, type) => http.get('/cities/'+code,{params:{type}}).then(r=>r.data);
@@ -7,4 +9,8 @@ export const getPlace = (id) => http.get('/places/'+id).then(r=>r.data);
 export const getTopics = () => http.get('/topics').then(r=>r.data);
 export const getTopic = (id) => http.get('/topics/'+id).then(r=>r.data);
 export const searchPlaces = (q) => http.get('/search',{params:{q}}).then(r=>r.data);
+export const getPlaceReviews = (placeId) => http.get('/reviews/place/' + placeId).then(r=>r.data);
+export const submitReview = (payload) => http.post('/reviews', payload).then(r=>r.data);
+export const deleteReview = (placeId) => http.delete('/reviews/place/' + placeId).then(r=>r.data);
+export const getMyReviews = () => http.get('/reviews/mine').then(r=>r.data);
 export default http;
