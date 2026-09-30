@@ -5,6 +5,8 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
+app.use(require('./middleware/visitor'));
+app.use('/api/reviews', require('./routes/reviews'));
 app.use('/api/provinces', require('./routes/provinces'));
 app.use('/api/cities', require('./routes/cities'));
 app.use('/api/places', require('./routes/places'));
