@@ -1,6 +1,7 @@
 // routes/places.js
 const express = require('express');
 const db = require('../db');
+const { placeUserStats, finalScore } = require('../lib/score');
 const router = express.Router();
 router.get('/:id', (req, res) => {
   const p = db.prepare('SELECT * FROM places WHERE id=?').get(req.params.id);
@@ -12,6 +13,16 @@ router.get('/:id', (req, res) => {
   const topics = db.prepare(
     'SELECT t.id, t.title FROM topic_places tp JOIN topics t ON t.id=tp.topic_id WHERE tp.place_id=?'
   ).all(p.id);
-  res.json({ ...p, tags, dimensions, avgScore, topics });
+  const stats = placeUserStats(p.id);
+  const myReview = req.visitorId ? db.prepare(`
+    SELECT id, recommend, comment, updated_at FROM user_reviews WHERE visitor_id=? AND place_id=?
+  `).get(req.visitorId, p.id) : null;
+  res.json({
+    ...p, tags, dimensions, avgScore, topics,
+    userAvgScore: stats.userAvg,
+    userReviewCount: stats.count,
+    finalScore: finalScore(p.official_score, stats.userAvg),
+    myReview
+  });
 });
 module.exports = router;
