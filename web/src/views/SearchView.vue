@@ -1,4 +1,16 @@
 <template>
-  <div class="placeholder">搜索页（待开发）</div>
+  <div>
+    <h2>搜索结果：{{ q }}</h2>
+    <PlaceCard v-for="p in results" :key="p.id" :place="p" />
+    <el-empty v-if="q && !results.length" description="未找到相关内容" />
+  </div>
 </template>
-<style scoped>.placeholder{ color:#999; text-align:center; padding:80px 0; }</style>
+<script setup>
+import { onMounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { searchPlaces } from '../api';
+import PlaceCard from '../components/PlaceCard.vue';
+const route = useRoute(); const q = ref(''); const results = ref([]);
+async function load(){ q.value = route.query.q||''; results.value = await searchPlaces(q.value); }
+onMounted(load); watch(()=>route.query.q, load);
+</script>
