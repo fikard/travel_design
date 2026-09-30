@@ -9,4 +9,5 @@ app.use('/api/provinces', require('./routes/provinces'));
 app.use('/api/cities', require('./routes/cities'));
 app.use('/api/places', require('./routes/places'));
 app.use('/api/search', require('./routes/search'));
+app.use('/api/topics', require('./routes/topics'));
 module.exports = app;
