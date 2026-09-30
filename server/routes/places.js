@@ -16,7 +16,7 @@ router.get('/:id', (req, res) => {
   const stats = placeUserStats(p.id);
   const myReview = req.visitorId ? db.prepare(`
     SELECT id, recommend, comment, updated_at FROM user_reviews WHERE visitor_id=? AND place_id=?
-  `).get(req.visitorId, p.id) : null;
+  `).get(req.visitorId, p.id) || null : null;
   res.json({
     ...p, tags, dimensions, avgScore, topics,
     userAvgScore: stats.userAvg,
