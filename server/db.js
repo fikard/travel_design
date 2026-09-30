@@ -51,6 +51,22 @@ CREATE TABLE IF NOT EXISTS topic_places (
   place_id INTEGER NOT NULL,
   rank INTEGER
 );
+CREATE TABLE IF NOT EXISTS user_reviews (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  visitor_id TEXT NOT NULL,
+  place_id INTEGER NOT NULL,
+  recommend TEXT NOT NULL CHECK(recommend IN ('worthit','general','no')),
+  comment TEXT,
+  created_at TEXT DEFAULT (datetime('now')),
+  updated_at TEXT DEFAULT (datetime('now')),
+  UNIQUE (visitor_id, place_id)
+);
+CREATE TABLE IF NOT EXISTS review_dimensions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  review_id INTEGER NOT NULL,
+  dimension TEXT NOT NULL,
+  score REAL NOT NULL CHECK(score BETWEEN 1 AND 5)
+);
 `);
 
 module.exports = db;
