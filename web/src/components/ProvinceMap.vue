@@ -9,7 +9,7 @@ async function render(){
   if (!props.provinceCode || !props.cities.length) return;
   if (!chart) chart = echarts.init(el.value);
   try { const geo = await (await fetch(`/geo/${props.provinceCode}.json`)).json();
-        if (geo.name) echarts.registerMap('prov', geo); else return; }
+        echarts.registerMap('prov', geo); }
   catch(e){ return; }
   chart.setOption({
     tooltip: { trigger: 'item' },
