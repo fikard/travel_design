@@ -1,0 +1,10 @@
+import axios from 'axios';
+const http = axios.create({ baseURL: import.meta.env.VITE_API_BASE || '/api' });
+export const getProvinces = () => http.get('/provinces').then(r=>r.data);
+export const getProvince = (code) => http.get('/provinces/'+code).then(r=>r.data);
+export const getCity = (code, type) => http.get('/cities/'+code,{params:{type}}).then(r=>r.data);
+export const getPlace = (id) => http.get('/places/'+id).then(r=>r.data);
+export const getTopics = () => http.get('/topics').then(r=>r.data);
+export const getTopic = (id) => http.get('/topics/'+id).then(r=>r.data);
+export const searchPlaces = (q) => http.get('/search',{params:{q}}).then(r=>r.data);
+export default http;
