@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
   const existing = db.prepare('SELECT id FROM user_reviews WHERE visitor_id=? AND place_id=?').get(req.visitorId, placeId);
   let reviewId;
   if (existing) {
-    db.prepare('UPDATE user_reviews SET recommend=?, comment=?, updated_at=datetime("now") WHERE id=?')
+    db.prepare('UPDATE user_reviews SET recommend=?, comment=?, updated_at=datetime(\'now\') WHERE id=?')
       .run(recommend, comment || '', existing.id);
     db.prepare('DELETE FROM review_dimensions WHERE review_id=?').run(existing.id);
     reviewId = existing.id;
